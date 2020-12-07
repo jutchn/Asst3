@@ -17,7 +17,8 @@ void func(int sockfd)
 	// infinite loop for chat 
 	for (;;) { 
 		bzero(buff, MAX); 
-
+		strcpy(buff, "REG|13|Knock, knock.|")
+		write(sockfd, buff, sizeof(buff));
 		// read the message from client and copy it in buffer 
 		read(sockfd, buff, sizeof(buff)); 
 		// print buffer which contains the client contents 
@@ -83,11 +84,11 @@ int main()
 	// Accept the data packet from client and verification 
 	connfd = accept(sockfd, (SA*)&cli, &len); 
 	if (connfd < 0) { 
-		printf("server acccept failed...\n"); 
+		printf("server accept failed...\n"); 
 		exit(0); 
 	} 
 	else
-		printf("server acccept the client...\n"); 
+		printf("server accept the client...\n"); 
 
 	// Function for chatting between client and server 
 	func(connfd); 
