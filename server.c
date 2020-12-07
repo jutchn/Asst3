@@ -12,15 +12,140 @@
 // Function designed for chat between client and server. 
 void func(int sockfd) 
 { 
-	char buff[MAX]; 
+	char *buff = (char*)malloc(sizeof(char)*MAX);
 	int n; 
 	// infinite loop for chat 
 	for (;;) { 
+// knock knock
 		bzero(buff, MAX); 
-		strcpy(buff, "REG|13|Knock, knock.|")
+		strcpy(buff, "REG|13|Knock, knock.|");
 		write(sockfd, buff, sizeof(buff));
+		bzero(buff, MAX); 
 		// read the message from client and copy it in buffer 
-		read(sockfd, buff, sizeof(buff)); 
+// this is whos there
+		//reg
+		int charsRead = 0;
+		while(charsRead != 3){
+			int temp = read(sockfd, buff, 3-charsRead);
+			charsRead += temp;
+		}
+		if(!strcmp(buff, "REG")){
+			printf("error pee"); 
+		} 
+		bzero(buff, MAX); 
+		read(sockfd,buff,1);
+		if(!buff[0] == "|"){
+			printf("error pee");
+		}
+		// end reg
+		// start number
+		char tempString[1];
+		int temp = 0
+		while(1){
+			read(sockfd, tempString, 1);
+			if(isDigit(tempString)){
+				buff[temp] = tempString;
+				temp++;
+			} else if(tempString[0] == "|") {
+				break;
+			} else {
+				printf("shit error");
+			}
+		}
+		// end number
+		// start word
+		int size = atoi(buff);
+		bzero(buff, MAX); 
+		charsRead = 0;
+		while(charsRead != size){
+			int temp = read(sockfd, buff, size-charsRead);
+			charsRead += temp;
+		}
+		if(strcmp(buff, "Who's there?")!=0){
+			printf("error fuckk");
+		}
+		bzero(buff, MAX); 
+		read(sockfd,buff,1);
+		if(buff[0] != "|"){
+			printf("error pee");
+		}
+		bzero(buff, MAX);
+		// send joe 
+		char* joke = "REG|4|Joe."
+		int jokelen = 4;
+
+		strcpy(buff, joke);
+		write(sockfd, buff, sizeof(buff));
+		bzero(buff, MAX);
+		
+		// this is whos there
+		//reg
+		int charsRead = 0;
+		while(charsRead != 3){
+			int temp = read(sockfd, buff, 3-charsRead);
+			charsRead += temp;
+		}
+		if(!strcmp(buff, "REG")){
+			printf("error pee"); 
+		} 
+		bzero(buff, MAX); 
+		read(sockfd,buff,1);
+		if(!buff[0] == "|"){
+			printf("error pee");
+		}
+		// end reg
+		// start number
+		char tempString[1];
+		int temp = 0
+		while(1){
+			read(sockfd, tempString, 1);
+			if(isDigit(tempString)){
+				buff[temp] = tempString;
+				temp++;
+			} else if(tempString[0] == "|") {
+				break;
+			} else {
+				printf("shit error");
+			}
+		}
+		// end number
+		if(atoi(buff) != 6+jokelen){
+			printf("error shit")
+		}
+		bzero(buff, MAX);
+
+
+		// start word
+		int size = atoi(buff);
+		bzero(buff, MAX); 
+		charsRead = 0;
+		while(charsRead != size){
+			int temp = read(sockfd, buff, size-charsRead);
+			charsRead += temp;
+		}
+		char who[] = ", who?";
+		for(int i = 0; i<6+jokelen; i++){
+			if(i<jokelen){
+				if(buff[i] != joke[i]){
+					printf("poopoo");
+				}
+			} else {
+				if(buff[i] != who[i-jokelen]){
+					printf("poopoo");
+				}
+			}
+		}
+		bzero(buff, MAX); 
+		read(sockfd,buff,1);
+		if(buff[0] != "|"){
+			printf("error pee");
+		}
+		bzero(buff, MAX);
+		//end word
+
+
+
+
 		// print buffer which contains the client contents 
 		printf("From client: %s\t To client : ", buff); 
 		bzero(buff, MAX); 
