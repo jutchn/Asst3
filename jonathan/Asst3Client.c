@@ -3,23 +3,45 @@
 #include <stdlib.h> 
 #include <string.h> 
 #include <sys/socket.h> 
-#define MAX 1000
+#define MAX 10000
 #define SA struct sockaddr 
 void func(int sockfd) 
 { 
 	char buff[MAX]; 
 	int n; 
-	for (;;) { 
-		bzero(buff, sizeof(buff)); 
-		read(sockfd, buff, sizeof(buff)); 
-		printf("From Server : %s\n", buff); 
-		bzero(buff, sizeof(buff)); 
-		printf("Enter the string : "); 
-		n = 0; 
-		while ((buff[n++] = getchar()) != '\n') 
-			; 
-		write(sockfd, buff, sizeof(buff)); 
-	} 
+	bzero(buff, sizeof(buff)); 
+	read(sockfd, buff, sizeof(buff)); 
+	printf("From Server : %s\n", buff); 
+
+	bzero(buff, sizeof(buff)); 
+	printf("Enter the string : "); 
+	n = 0; 
+	while ((buff[n++] = getchar()) != '\n');
+
+	write(sockfd, buff, sizeof(buff)); 
+
+	bzero(buff, sizeof(buff)); 
+	read(sockfd, buff, sizeof(buff)); 
+	printf("From Server : %s\n", buff); 
+
+	bzero(buff, sizeof(buff)); 
+	printf("Enter the string : "); 
+	n = 0; 
+	while ((buff[n++] = getchar()) != '\n');
+
+	write(sockfd, buff, sizeof(buff)); 
+
+	bzero(buff, sizeof(buff)); 
+	read(sockfd, buff, sizeof(buff)); 
+	printf("From Server : %s\n", buff); 
+
+	bzero(buff, sizeof(buff)); 
+	printf("Enter the string : "); 
+	n = 0; 
+	while ((buff[n++] = getchar()) != '\n');
+
+	write(sockfd, buff, sizeof(buff)); 
+	close(sockfd);
 } 
 
 int main(int argc, char ** argv) 
@@ -52,7 +74,4 @@ int main(int argc, char ** argv)
 
 	// function for chat 
 	func(sockfd); 
-
-	// close the socket 
-	close(sockfd); 
 } 
